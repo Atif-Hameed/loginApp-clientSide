@@ -4,6 +4,7 @@ import img from "@/assets/vector.png"
 import { useFormik } from 'formik'
 import { passwordValidation} from '@/helper/FromValidation'
 import { Toaster } from 'react-hot-toast'
+import Link from 'next/link'
 
 export default function Password() {
 
@@ -11,6 +12,8 @@ export default function Password() {
     initialValues: {
       password: '',
     },
+    validateOnChange:false,
+    validateOnBlur:false,
     validationSchema: passwordValidation,
     onSubmit: async (values) => {
       console.log(values)
@@ -36,11 +39,11 @@ export default function Password() {
             <div className='relative'>
               <input value={values.password} onChange={handleChange} type="text" placeholder='Password' className='px-3 h-12 w-80 border-b-2 border-gray-200 rounded-2xl outline-none' name="password" id="" />
               {
-                errors.password &&  <p className='text-red-500 text-sm -bottom-4 left-3 absolute'>{errors.password}</p>
+                errors.password &&  <p className='text-red-500 text-sm -bottom-3 left-3 absolute'>{errors.password}</p>
               }
             </div>
             <button type='submit' className='bg-blue-500 rounded-lg text-white w-60 py-3' >Let&apos;s Go</button>
-            <h1 className='text-blue-900 text-sm'>Not a Member? <span className='text-red-500'>Register Now</span></h1>
+            <h1 className='text-blue-900 text-sm'>Forgot Password? <Link href={'/recover'} className='text-red-500'>Recover Now</Link></h1>
           </form>
         </div>
 

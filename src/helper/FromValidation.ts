@@ -5,5 +5,8 @@ export const usernameValidation = Yup.object({
 })
 
 export const passwordValidation = Yup.object({
-    password: Yup.string().min(4).required('Password Required')
+    password: Yup.string().min(4).required('Password Required').matches(
+        /.*[!@#$%^&*(),.?":{}|<>].*/,
+        'Password must contain at least one special character'
+    ),
 })
