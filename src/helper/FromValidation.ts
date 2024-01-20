@@ -4,6 +4,10 @@ export const usernameValidation = Yup.object({
     username: Yup.string().required('Username Required')
 })
 
+export const emailValidation = Yup.object({
+    email: Yup.string().email()
+})
+
 export const passwordValidation = Yup.object({
     password: Yup.string().min(4).required('Password Required').matches(
         /.*[!@#$%^&*(),.?":{}|<>].*/,

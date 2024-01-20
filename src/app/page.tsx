@@ -7,6 +7,7 @@ import { Toaster } from 'react-hot-toast'
 import Inputfield from './components/Inputfield'
 import Button from './components/Button'
 import Headings from './components/Headings'
+import Wrapper from './components/Wrapper'
 
 export default function Username() {
 
@@ -22,9 +23,8 @@ export default function Username() {
   })
 
   return (
-    <div className='w-full h-screen flex justify-center items-center'>
-      <div className='md:w-[35%] h-[75%] glass p-2' >
-
+    <>
+      <Wrapper>
         <Headings
           heading='Hello Again!'
           des='Explore more by connecting with us.'
@@ -35,7 +35,7 @@ export default function Username() {
         </div>
 
         <div className='flex justify-center'>
-          <form onSubmit={handleSubmit} className=' flex flex-col items-center gap-4 justify-center'>
+          <form onSubmit={handleSubmit} className=' flex lg:w-[60%] flex-col items-center gap-4 justify-center'>
 
             <Inputfield
               value={values.username}
@@ -51,8 +51,7 @@ export default function Username() {
             <h1 className='text-blue-900 text-sm'>Not a Member? <span className='text-red-500'>Register Now</span></h1>
           </form>
         </div>
-
-      </div>
-    </div>
+      </Wrapper>
+    </>
   )
 }

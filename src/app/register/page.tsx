@@ -8,8 +8,9 @@ import Link from 'next/link'
 import Inputfield from '../components/Inputfield'
 import Button from '../components/Button'
 import Headings from '../components/Headings'
+import Wrapper from '../components/Wrapper'
 
-export default function Username() {
+export default function Register() {
 
     const { errors, values, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
         initialValues: {
@@ -27,9 +28,8 @@ export default function Username() {
     })
 
     return (
-        <div className='w-full h-screen flex justify-center items-center'>
-            <div className='md:w-[35%] h-[75%] glass p-2' >
-
+        <>
+            <Wrapper>
                 <Headings
                     heading='Register'
                     des='Happy to join you!'
@@ -40,7 +40,7 @@ export default function Username() {
                 </div>
 
                 <div className='flex justify-center'>
-                    <form onSubmit={handleSubmit} className=' flex flex-col items-center gap-2 justify-center'>
+                    <form onSubmit={handleSubmit} className=' flex lg:w-[60%] flex-col items-center gap-2 justify-center'>
 
                         <Inputfield
                             value={values.email}
@@ -74,8 +74,7 @@ export default function Username() {
                         <h1 className='text-blue-900 text-sm'>Already Register <Link href={''} className='text-red-500'>Login Now</Link></h1>
                     </form>
                 </div>
-
-            </div>
-        </div>
+            </Wrapper>
+        </>
     )
 }

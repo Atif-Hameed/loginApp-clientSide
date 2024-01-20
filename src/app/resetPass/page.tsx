@@ -8,8 +8,9 @@ import Link from 'next/link'
 import Inputfield from '../components/Inputfield'
 import Button from '../components/Button'
 import Headings from '../components/Headings'
+import Wrapper from '../components/Wrapper'
 
-export default function Password() {
+export default function Reset() {
 
     const { errors, values, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
         initialValues: {
@@ -26,16 +27,14 @@ export default function Password() {
     })
 
     return (
-        <div className='w-full h-screen flex justify-center items-center'>
-            <div className='md:w-[35%] h-[75%] glass p-2' >
-
+        <>
+            <Wrapper>
                 <Headings
                     heading='Reset'
                     des='Enter New Password'
                 />
-
                 <div className='flex justify-center pt-20'>
-                    <form onSubmit={handleSubmit} className=' flex flex-col items-center gap-4 justify-center'>
+                    <form onSubmit={handleSubmit} className=' flex flex-col lg:w-[60%] items-center gap-4 justify-center'>
 
                         <Inputfield
                             value={values.password}
@@ -55,11 +54,9 @@ export default function Password() {
                         />
 
                         <Button name='Reset' />
-
                     </form>
                 </div>
-
-            </div>
-        </div>
+            </Wrapper>
+        </>
     )
 }
