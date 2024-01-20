@@ -30,10 +30,6 @@ export default function Username() {
         <div className='w-full h-screen flex justify-center items-center'>
             <div className='md:w-[35%] h-[75%] glass p-2' >
 
-                {/* <div className='flex flex-col justify-center items-center gap-2'>
-                    <h1 className='text-4xl font-bold font-poppins' >Register</h1>
-                    <p className='w-48 text-center text-sm text-gray-500 font-medium font-roboto'>Happy to join you!</p>
-                </div> */}
                 <Headings
                     heading='Register'
                     des='Happy to join you!'
@@ -72,8 +68,9 @@ export default function Username() {
                             name='username'
                             errors={errors.username}
                         />
-                        {/* <button type='submit' className='bg-blue-500 rounded-lg text-white w-60 py-3' >Register</button> */}
+
                         <Button name='Register' />
+
                         <h1 className='text-blue-900 text-sm'>Already Register <Link href={''} className='text-red-500'>Login Now</Link></h1>
                     </form>
                 </div>

@@ -29,11 +29,6 @@ export default function Password() {
         <div className='w-full h-screen flex justify-center items-center'>
             <div className='md:w-[35%] h-[75%] glass p-2' >
 
-                {/* <div className='flex flex-col justify-center items-center gap-2'>
-                    <h1 className='text-4xl font-bold font-poppins' >Reset</h1>
-                    <p className='w-48 text-center text-sm text-gray-500 font-medium font-roboto'>Enter New Password</p>
-                </div> */}
-
                 <Headings
                     heading='Reset'
                     des='Enter New Password'
@@ -59,20 +54,8 @@ export default function Password() {
                             errors={errors.confirmPass}
                         />
 
-                        {/* <div className='relative'>
-                            <input value={values.password} onChange={handleChange} type="password" placeholder='New Password' className='px-3 h-12 w-80 border-b-2 border-gray-200 rounded-2xl outline-none' name="password" id="" />
-                            {
-                                errors.password && <p className='text-red-500 text-sm -bottom-3 left-3 absolute'>{errors.password}</p>
-                            }
-                        </div>
-                        <div className='relative'>
-                            <input value={values.confirmPass} onChange={handleChange} type="password" placeholder='Repeat Password' className='px-3 h-12 w-80 border-b-2 border-gray-200 rounded-2xl outline-none' name="confirmPass" id="" />
-                            {
-                                errors.confirmPass && <p className='text-red-500 text-sm -bottom-3 left-3 absolute'>{errors.confirmPass}</p>
-                            }
-                        </div> */}
-                        {/* <button type='submit' className='bg-blue-500 rounded-lg text-white w-60 py-3' >Reset</button> */}
                         <Button name='Reset' />
+
                     </form>
                 </div>
 
