@@ -1,9 +1,9 @@
 'use client'
 
-import Button from "../components/Button"
-import Headings from "../components/Headings"
-import Inputfield from "../components/Inputfield"
-import Wrapper from "../components/Wrapper"
+import Button from "../../components/Button"
+import Headings from "../../components/Headings"
+import Inputfield from "../../components/Inputfield"
+import Wrapper from "../../components/Wrapper"
 
 
 export default function Recovery() {

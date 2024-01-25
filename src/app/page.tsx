@@ -3,13 +3,23 @@ import Image from 'next/image'
 import img from "@/assets/vector.png"
 import { useFormik } from 'formik'
 import { usernameValidation } from '@/helper/FromValidation'
-import { Toaster } from 'react-hot-toast'
-import Inputfield from './components/Inputfield'
-import Button from './components/Button'
-import Headings from './components/Headings'
-import Wrapper from './components/Wrapper'
+import toast, { Toaster } from 'react-hot-toast'
+import Inputfield from '../components/Inputfield'
+import Button from '../components/Button'
+import Headings from '../components/Headings'
+import Wrapper from '../components/Wrapper'
+import Link from 'next/link'
+import { userNameFunction } from '@/services/Api'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import { useDispatch, useSelector } from 'react-redux'
+import { rootState } from '@/Redux/store'
 
 export default function Username() {
+
+  const router = useRouter();
+  const dispatch = useDispatch()
+  const { } = useSelector((state: rootState) => state.user)
 
   const { errors, values, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
     initialValues: {
@@ -17,14 +27,29 @@ export default function Username() {
     },
     validationSchema: usernameValidation,
     onSubmit: async (values) => {
-      console.log(values)
-      resetForm()
+      try {
+        const response = await userNameFunction(values.username);
+        if (response.success) {
+          console.log('User data:', response.data.user);
+          dispatch(response.data.user)
+          toast.success(`${response.message}`);
+          router.push('/password')
+        }
+        else {
+          console.error('Error fetching data:', response.message);
+          toast.error(`${response.message}`);
+        }
+      } catch (error) {
+        console.error('Unexpected error:', error);
+        toast.error('An unexpected error occurred');
+      }
     }
   })
 
   return (
     <>
       <Wrapper>
+        <Toaster />
         <Headings
           heading='Hello Again!'
           des='Explore more by connecting with us.'
@@ -48,7 +73,7 @@ export default function Username() {
 
             <Button name='Let&apos;s Go' />
 
-            <h1 className='text-blue-900 text-sm'>Not a Member? <span className='text-red-500'>Register Now</span></h1>
+            <h1 className='text-blue-900 text-sm'>Not a Member? <Link href='/register' className='text-red-500'>Register Now</Link></h1>
           </form>
         </div>
       </Wrapper>

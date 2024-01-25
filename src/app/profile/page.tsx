@@ -5,10 +5,10 @@ import { useFormik } from 'formik'
 import { emailValidation, registerValidation, usernameValidation } from '@/helper/FromValidation'
 import { Toaster } from 'react-hot-toast'
 import Link from 'next/link'
-import Inputfield from '../components/Inputfield'
-import Button from '../components/Button'
-import Headings from '../components/Headings'
-import Wrapper from '../components/Wrapper'
+import Inputfield from '../../components/Inputfield'
+import Button from '../../components/Button'
+import Headings from '../../components/Headings'
+import Wrapper from '../../components/Wrapper'
 
 export default function Profile() {
 
@@ -33,7 +33,7 @@ export default function Profile() {
         <>
             <Wrapper>
                 <Headings
-                    heading='Register'
+                    heading='Profile'
                     des='Happy to join you!'
                 />
 
