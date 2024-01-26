@@ -25,11 +25,12 @@ export default function Username() {
     },
     validationSchema: usernameValidation,
     onSubmit: async (values) => {
+      const loadingToastId = toast.loading('Loading...');  //set loading
       try {
         const data = await userNameFunction(values.username);
         dispatch(setUser(data.user))
         console.log(data)
-        toast.success(data.message)
+        toast.success(data.message, {id: loadingToastId})
         router.push('/password')
         if (data.success) {
 
@@ -58,6 +59,7 @@ export default function Username() {
           console.error('Network error or other:', error.message);
           toast.error(error.message)
         }
+        toast.dismiss(loadingToastId);
       }
     }
   })

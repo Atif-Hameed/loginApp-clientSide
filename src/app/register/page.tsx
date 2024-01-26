@@ -10,9 +10,11 @@ import Button from '../../components/Button'
 import Headings from '../../components/Headings'
 import Wrapper from '../../components/Wrapper'
 import { registerFunction } from '@/services/Api'
+import { useRouter } from 'next/navigation'
 
 export default function Register() {
 
+    const router = useRouter()
     const { errors, values, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
         initialValues: {
             email: '',
@@ -23,11 +25,12 @@ export default function Register() {
         validateOnChange: false,
         validationSchema: registerValidation,
         onSubmit: async (values) => {
+            const loadingToastId = toast.loading('Loading...');  //set loading
             try {
                 const data = await registerFunction(values.email, values.password, values.username,);
                 console.log(data);
-                toast.success(data.message)
-                // resetForm();
+                toast.success(data.message, { id: loadingToastId })
+                router.push('/')
             } catch (error: any) {
                 if (error.response) {
                     const status = error.response.status;
@@ -45,6 +48,7 @@ export default function Register() {
                     console.error('Network error or other:', error.message);
                     toast.error(error.message)
                 }
+                toast.dismiss(loadingToastId)
             }
         }
     })
@@ -52,7 +56,7 @@ export default function Register() {
     return (
         <>
             <Wrapper>
-                <Toaster/>
+                <Toaster />
                 <Headings
                     heading='Register'
                     des='Happy to join you!'

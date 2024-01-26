@@ -28,10 +28,11 @@ export default function Password() {
     // validationSchema: passwordValidation,
     onSubmit: async (values) => {
       const username = user?.userName
+      const loadingToastId = toast.loading('Loading...');    //set Laoding
       try {
         const data = await loginFunction(username!, values.password)
         console.log(data)
-        toast.success(data.message)
+        toast.success(data.message, { id: loadingToastId });
         router.push('/profile')
       }
       catch (error: any) {
@@ -54,6 +55,7 @@ export default function Password() {
           console.error('Network error or other:', error.message);
           toast.error(error.message)
         }
+        toast.dismiss(loadingToastId);
       }
     }
   })
