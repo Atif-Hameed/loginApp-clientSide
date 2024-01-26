@@ -20,6 +20,7 @@ const Inputfield: React.FC<inputProps> = ({ value, onChange, type, placeholder, 
                     placeholder={placeholder}
                     className='px-3 h-12 w-full border-b-2 border-gray-200 rounded-2xl outline-none'
                     name={name}
+                    required
                     id="" />
                 {
                     errors && <p className='text-red-500 text-sm -bottom-4 left-3 absolute'>{errors}</p>

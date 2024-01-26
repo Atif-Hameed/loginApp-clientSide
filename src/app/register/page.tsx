@@ -3,12 +3,13 @@ import Image from 'next/image'
 import img from "@/assets/vector.png"
 import { useFormik } from 'formik'
 import { registerValidation, usernameValidation } from '@/helper/FromValidation'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import Link from 'next/link'
 import Inputfield from '../../components/Inputfield'
 import Button from '../../components/Button'
 import Headings from '../../components/Headings'
 import Wrapper from '../../components/Wrapper'
+import { registerFunction } from '@/services/Api'
 
 export default function Register() {
 
@@ -22,14 +23,36 @@ export default function Register() {
         validateOnChange: false,
         validationSchema: registerValidation,
         onSubmit: async (values) => {
-            console.log(values)
-            resetForm()
+            try {
+                const data = await registerFunction(values.email, values.password, values.username,);
+                console.log(data);
+                toast.success(data.message)
+                // resetForm();
+            } catch (error: any) {
+                if (error.response) {
+                    const status = error.response.status;
+                    if (status === 400) {
+                        console.error('Bad Request:', error.response.data.message);
+                        toast.error(error.response.data.message)
+                    } else if (status === 409) {
+                        console.error('Conflict:', error.response.data.message);
+                        toast.error(error.response.data.message)
+                    } else {
+                        console.error('Unexpected error:', error.response.data.message);
+                        toast.error(error.response.data.message)
+                    }
+                } else {
+                    console.error('Network error or other:', error.message);
+                    toast.error(error.message)
+                }
+            }
         }
     })
 
     return (
         <>
             <Wrapper>
+                <Toaster/>
                 <Headings
                     heading='Register'
                     des='Happy to join you!'

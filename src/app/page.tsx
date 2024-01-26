@@ -10,17 +10,14 @@ import Headings from '../components/Headings'
 import Wrapper from '../components/Wrapper'
 import Link from 'next/link'
 import { userNameFunction } from '@/services/Api'
-import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { useDispatch, useSelector } from 'react-redux'
-import { rootState } from '@/Redux/store'
+import { useDispatch } from 'react-redux'
 import { setUser } from '@/Redux/userSlice'
 
 export default function Username() {
 
   const router = useRouter();
   const dispatch = useDispatch()
-  // const { } = useSelector((state: rootState) => state.user)
 
   const { errors, values, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
     initialValues: {
@@ -30,17 +27,37 @@ export default function Username() {
     onSubmit: async (values) => {
       try {
         const data = await userNameFunction(values.username);
+        dispatch(setUser(data.user))
+        console.log(data)
+        toast.success(data.message)
+        router.push('/password')
         if (data.success) {
-          console.log(data)
-          toast.success(data.message)
+
         } else {
           console.log(data)
           toast.error('User not Found')
         }
 
-      } catch (error) {
-        console.error('Unexpected error:', error);
-        toast.error('An unexpected error occurred');
+      } catch (error: any) {
+        if (error.response) {
+          const status = error.response.status;
+          if (status === 404) {
+            console.log("User Error : ", error.response.data)
+            toast.error(error.response.data.message)
+          }
+          else if (status === 501) {
+            console.log("User Error : ", error.response.data)
+            toast.error(error.response.data.message)
+          }
+          else {
+            console.error('Unexpected error:', error.response.data.message);
+            toast.error(error.response.data.message)
+          }
+        }
+        else {
+          console.error('Network error or other:', error.message);
+          toast.error(error.message)
+        }
       }
     }
   })

@@ -25,25 +25,36 @@ export default function Password() {
     },
     validateOnChange: false,
     validateOnBlur: false,
-    validationSchema: passwordValidation,
+    // validationSchema: passwordValidation,
     onSubmit: async (values) => {
       const username = user?.userName
       try {
-        const response = await loginFunction(username!, values.password)
-        if (response.success) {
-          console.log(response)
-          toast.success(response.message)
-          router.push('/profile')
-        } else {
-          console.log(response)
-          toast.error('Invalid Cridential')
-        }
-
-      } catch (error) {
-        console.error('Unexpected error:', error);
-        toast.error('An unexpected error occurred');
+        const data = await loginFunction(username!, values.password)
+        console.log(data)
+        toast.success(data.message)
+        router.push('/profile')
       }
-      resetForm()
+      catch (error: any) {
+        if (error.response) {
+          const status = error.response.status;
+          if (status === 404) {
+            console.log("USer not found : ", error.response.data)
+            toast.error(error.response.data.message)
+          }
+          else if (status === 401) {
+            console.log("Password Error : ", error.response.data)
+            toast.error(error.response.data.message)
+          }
+          else {
+            console.error('Unexpected error:', error.response.data.message);
+            toast.error(error.response.data.message)
+          }
+        }
+        else {
+          console.error('Network error or other:', error.message);
+          toast.error(error.message)
+        }
+      }
     }
   })
 

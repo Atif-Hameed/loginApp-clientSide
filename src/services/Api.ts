@@ -2,46 +2,39 @@ import { Axios } from "@/utils/axios"
 import axios from "axios";
 
 
-
+//userName
 export const userNameFunction = async (userName: string) => {
     try {
         const response = await Axios.get(`/getUser/${userName}`);
         const data = response.data;
-
-        if (response.status === 200) {
-            return data
-        } else {
-            return {message:'User not Found'}
-        }
+        return data
     } catch (error) {
-        return {
-            success: false,
-            message: error || 'Error fetching user data',
-        };
+        throw error
     }
 };
 
-
+//password
 export const loginFunction = async (userName: string, password: string) => {
     try {
         const response = await Axios.post('/login', { userName, password })
         const data = response.data
-        if (response.status === 200) {
-            return data
-        }
-        if (response.status === 401) {
-            return {
-                Success: false,
-                message: 'Invalid Cridentials',
-            }
-        }
+        return data;
+
     } catch (error) {
-        return {
-            success: false,
-            message: error || 'Error Logging in',
-        };
+        throw error;
     }
 }
+
+//register
+export const registerFunction = async (email: string, password: string, userName: string, profile?: string) => {
+    try {
+        const response = await Axios.post('/register', { email, password, userName, profile })
+        return response.data;
+    } catch (error) {
+        throw error; // Rethrow the error for custom handling in the component
+    }
+}
+
 
 
 
