@@ -6,8 +6,7 @@ import { Inter, Poppins, Roboto } from 'next/font/google'
 // const mylocalFont = localfont({src: './myfont.wfft2'})
 
 import './globals.css'
-import { Provider } from 'react-redux'
-import store from '@/Redux/store'
+import ReduxProvider from '@/Redux/provider'
 
 const inter = Inter({ subsets: ['latin'] })
 const poppins = Poppins({ subsets: ['latin'], weight: '400', variable: '--font-poppins' })
@@ -26,9 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className, poppins.variable, roboto.variable} font-sans`}>
-        {/* <Provider store={store}> */}
+        <ReduxProvider>
           {children}
-        {/* </Provider> */}
+        </ReduxProvider>
       </body>
     </html>
   )

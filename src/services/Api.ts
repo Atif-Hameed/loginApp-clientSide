@@ -9,13 +9,9 @@ export const userNameFunction = async (userName: string) => {
         const data = response.data;
 
         if (response.status === 200) {
-            return {
-                success: true,
-                message: 'User Found',
-                data : data
-            };
+            return data
         } else {
-            throw new Error('User not found');
+            return {message:'User not Found'}
         }
     } catch (error) {
         return {
@@ -24,6 +20,28 @@ export const userNameFunction = async (userName: string) => {
         };
     }
 };
+
+
+export const loginFunction = async (userName: string, password: string) => {
+    try {
+        const response = await Axios.post('/login', { userName, password })
+        const data = response.data
+        if (response.status === 200) {
+            return data
+        }
+        if (response.status === 401) {
+            return {
+                Success: false,
+                message: 'Invalid Cridentials',
+            }
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: error || 'Error Logging in',
+        };
+    }
+}
 
 
 

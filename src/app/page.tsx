@@ -14,12 +14,13 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { rootState } from '@/Redux/store'
+import { setUser } from '@/Redux/userSlice'
 
 export default function Username() {
 
   const router = useRouter();
   const dispatch = useDispatch()
-  const { } = useSelector((state: rootState) => state.user)
+  // const { } = useSelector((state: rootState) => state.user)
 
   const { errors, values, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
     initialValues: {
@@ -28,17 +29,15 @@ export default function Username() {
     validationSchema: usernameValidation,
     onSubmit: async (values) => {
       try {
-        const response = await userNameFunction(values.username);
-        if (response.success) {
-          console.log('User data:', response.data.user);
-          dispatch(response.data.user)
-          toast.success(`${response.message}`);
-          router.push('/password')
+        const data = await userNameFunction(values.username);
+        if (data.success) {
+          console.log(data)
+          toast.success(data.message)
+        } else {
+          console.log(data)
+          toast.error('User not Found')
         }
-        else {
-          console.error('Error fetching data:', response.message);
-          toast.error(`${response.message}`);
-        }
+
       } catch (error) {
         console.error('Unexpected error:', error);
         toast.error('An unexpected error occurred');
