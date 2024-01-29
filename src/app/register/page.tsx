@@ -41,7 +41,7 @@ export default function Register() {
                         console.error('Conflict:', error.response.data.message);
                         toast.error(error.response.data.message)
                     } else {
-                        console.error('Unexpected error:', error.response.data.message);
+                        console.error('Unexpected error:', error.response);
                         toast.error(error.response.data.message)
                     }
                 } else {

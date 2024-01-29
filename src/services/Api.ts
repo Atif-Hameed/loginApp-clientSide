@@ -29,7 +29,7 @@ export const loginFunction = async (userName: string, password: string) => {
 export const registerFunction = async (email: string, password: string, userName: string, profile?: string, msg?:string) => {
     try {
         const response = await Axios.post('/register', { email, password, userName, profile })
-        const mailResponse = await Axios.post('/registerMail', {msg})
+        const mailResponse = await Axios.post('/registerMail', {msg, email})
         return response.data, mailResponse.data;
     } catch (error) {
         throw error; // Rethrow the error for custom handling in the component
