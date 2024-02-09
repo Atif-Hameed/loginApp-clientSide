@@ -26,13 +26,24 @@ export const loginFunction = async (userName: string, password: string) => {
 }
 
 //register
-export const registerFunction = async (email: string, password: string, userName: string, profile?: string, msg?:string) => {
+export const registerFunction = async (email: string, password: string, userName: string, profile?: string, msg?: string) => {
     try {
         const response = await Axios.post('/register', { email, password, userName, profile })
-        const mailResponse = await Axios.post('/registerMail', {msg, email})
+        const mailResponse = await Axios.post('/registerMail', { msg, email })
         return response.data, mailResponse.data;
     } catch (error) {
         throw error; // Rethrow the error for custom handling in the component
+    }
+}
+
+//update USer
+export const updateUserFunction = async (userId?: string, fname?: string, lname?: string, mobile?: string, adress?: string) => {
+    try {
+        const response = await Axios.put('/updateUser', { fname, lname, mobile, adress }, { params: { id: userId } })
+        return response.data
+
+    } catch (error) {
+        throw error;
     }
 }
 

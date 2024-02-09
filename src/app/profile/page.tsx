@@ -3,20 +3,27 @@ import Image from 'next/image'
 import img from "@/assets/vector.png"
 import { useFormik } from 'formik'
 import { emailValidation, registerValidation, usernameValidation } from '@/helper/FromValidation'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import Link from 'next/link'
 import Inputfield from '../../components/Inputfield'
 import Button from '../../components/Button'
 import Headings from '../../components/Headings'
 import Wrapper from '../../components/Wrapper'
+import { useDispatch, useSelector } from 'react-redux'
+import { rootState } from '@/Redux/store'
+import { updateUserFunction } from '@/services/Api'
+import { setUser } from '@/Redux/userSlice'
 
 export default function Profile() {
+
+    const dispatch = useDispatch()
+    const { user } = useSelector((state: rootState) => state.User)
 
     const { errors, values, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
         initialValues: {
             fname: '',
             lname: '',
-            email: '',
+            email: user?.email,
             mobile: '',
             adress: '',
         },
@@ -24,14 +31,50 @@ export default function Profile() {
         validateOnChange: false,
         validationSchema: emailValidation,
         onSubmit: async (values) => {
-            console.log(values)
-            resetForm()
+            const loadingToastId = toast.loading('Loading...');  //set loading
+            try {
+                const data = await updateUserFunction('65b4049d4d62a3de35ffee0b', values.fname, values.lname, values.mobile, values.adress);
+                // dispatch(setUser(data.user))
+                console.log(data)
+                toast.success(data.message, { id: loadingToastId })
+                // router.push('/password')
+                resetForm();
+                if (data.success) {
+
+                } else {
+                    console.log(data)
+                    toast.error('Could not Update the data')
+                }
+
+            } catch (error: any) {
+                if (error.response) {
+                    const status = error.response.status;
+                    if (status === 404) {
+                        console.log("User Error : ", error.response.data)
+                        toast.error(error.response.data.message)
+                    }
+                    else if (status === 500) {
+                        console.log("User Error : ", error.response.data)
+                        toast.error(error.response.data.message)
+                    }
+                    else {
+                        console.error('Unexpected error:', error.response.data.message);
+                        toast.error(error.response.data.message)
+                    }
+                }
+                else {
+                    console.error('Network error or other:', error.message);
+                    toast.error(error.message)
+                }
+                toast.dismiss(loadingToastId);
+            }
         }
     })
 
     return (
         <>
             <Wrapper>
+                <Toaster />
                 <Headings
                     heading='Profile'
                     des='Happy to join you!'

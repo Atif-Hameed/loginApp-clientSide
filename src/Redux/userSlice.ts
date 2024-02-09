@@ -11,7 +11,7 @@ interface User {
     password: string;
 }
 
-interface UserState {
+export interface UserState {
     user: User | null;
 }
 

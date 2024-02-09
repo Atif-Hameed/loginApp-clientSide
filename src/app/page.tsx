@@ -30,7 +30,7 @@ export default function Username() {
         const data = await userNameFunction(values.username);
         dispatch(setUser(data.user))
         console.log(data)
-        toast.success(data.message, {id: loadingToastId})
+        toast.success(data.message, { id: loadingToastId })
         router.push('/password')
         if (data.success) {
 
