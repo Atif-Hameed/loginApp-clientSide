@@ -37,9 +37,9 @@ export const registerFunction = async (email: string, password: string, userName
 }
 
 //update USer
-export const updateUserFunction = async (userId?: string, fname?: string, lname?: string, mobile?: string, adress?: string) => {
+export const updateUserFunction = async (fname?: string, lname?: string, mobile?: number, adress?: string) => {
     try {
-        const response = await Axios.put('/updateUser', { fname, lname, mobile, adress }, { params: { id: userId } })
+        const response = await Axios.put('/updateUser', { fname, lname, mobile, adress })
         return response.data
 
     } catch (error) {

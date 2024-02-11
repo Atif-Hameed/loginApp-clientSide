@@ -9,9 +9,10 @@ interface User {
     lname: string;
     adress: string;
     password: string;
+    mobile:number;
 }
 
-export interface UserState {
+interface UserState {
     user: User | null;
 }
 

@@ -21,11 +21,11 @@ export default function Profile() {
 
     const { errors, values, handleChange, handleBlur, handleSubmit, resetForm } = useFormik({
         initialValues: {
-            fname: '',
-            lname: '',
+            fname: user?.fname,
+            lname: user?.lname,
             email: user?.email,
-            mobile: '',
-            adress: '',
+            mobile: user?.mobile,
+            adress: user?.adress,
         },
         validateOnBlur: false,
         validateOnChange: false,
@@ -33,8 +33,7 @@ export default function Profile() {
         onSubmit: async (values) => {
             const loadingToastId = toast.loading('Loading...');  //set loading
             try {
-                const data = await updateUserFunction('65b4049d4d62a3de35ffee0b', values.fname, values.lname, values.mobile, values.adress);
-                // dispatch(setUser(data.user))
+                const data = await updateUserFunction(values.fname, values.lname, values.mobile, values.adress);
                 console.log(data)
                 toast.success(data.message, { id: loadingToastId })
                 // router.push('/password')
